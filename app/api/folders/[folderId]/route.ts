@@ -3,7 +3,7 @@ import { listImages } from '@/lib/googleDrive';
 
 export const revalidate = 60; // ISR
 
-export async function GET(req: Request, { params }: { params: { folderId: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ folderId: string }> }) {
   try {
     const { folderId } = await params
     const images = await listImages(folderId);
