@@ -9,7 +9,7 @@ const auth = new google.auth.JWT({
 
 const drive = google.drive({ version: 'v3', auth });
 
-export async function GET(req: NextRequest, { params }: { params: { imageId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ imageId: string }> }) {
   try {
     const { imageId } = await params
     const fileId = imageId;
