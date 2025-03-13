@@ -1,3 +1,5 @@
+"use client"
+
 export const revalidate = 60; // ISR for 60 seconds
 
 export default async function HomePage() {

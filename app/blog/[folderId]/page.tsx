@@ -1,3 +1,4 @@
+"use client"
 export const revalidate = 60;
 
 export default async function BlogPost({ params }: { params: Promise<{ folderId: string }> }) {
