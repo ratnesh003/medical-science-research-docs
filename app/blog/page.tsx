@@ -1,11 +1,5 @@
-"use client"
-
-export const revalidate = 60; // ISR for 60 seconds
-
 export default async function HomePage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/folders`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/folders`);
 
   const folders = await res.json();
 

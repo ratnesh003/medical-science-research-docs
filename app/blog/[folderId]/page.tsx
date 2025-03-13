@@ -1,11 +1,6 @@
-"use client"
-export const revalidate = 60;
-
 export default async function BlogPost({ params }: { params: Promise<{ folderId: string }> }) {
   const { folderId } = await params
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/folders/${folderId}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/folders/${folderId}`);
 
   const images = await res.json();
 
