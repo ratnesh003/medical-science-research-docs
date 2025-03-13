@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function HomePage() {
 
   const [folders, setFolders] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchFolders() {
