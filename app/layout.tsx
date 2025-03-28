@@ -5,6 +5,7 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { Footer } from "@/components/footer";
 import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "MedScienceDocs",
@@ -40,6 +41,7 @@ export default function RootLayout({
           <Navbar />
           <main className="sm:container mx-auto w-[90vw] h-auto scroll-smooth">
             {children}
+            <Toaster />
           </main>
           <Footer />
         </ThemeProvider>

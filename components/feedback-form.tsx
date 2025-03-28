@@ -8,15 +8,21 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import React from "react";
 import { Textarea } from "./ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import React, { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   username: z.string().min(5, {
@@ -24,93 +30,214 @@ const formSchema = z.object({
   }),
   content: z
     .string()
-    .min(10, {
-      message: "content must be at least 10 characters.",
+    .min(4, {
+      message: "Content must be at least 4 characters.",
     })
-    .max(5000000, {
-      message: "content must not be longer than 5000000 characters.",
+    .max(5000, {
+      message: "Content must not be longer than 5000 characters.",
     }),
-  email: z.string({
-    required_error : "The Email is required for the comment"
-  }).email()
+  email: z.string().email({ message: "Invalid email address" }),
+  folderId: z.string(),
 });
 
-const onSubmit = (values: z.infer<typeof formSchema>) => {
-  const { username, content } = values;
-  console.log(username);
-  console.log(content);
-};
+const FeedbackForm = ({ folderId }: { folderId: string }) => {
+  const { toast } = useToast();
+  const [showOtpPopup, setShowOtpPopup] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [formFolderId, setformFolderId] = useState(folderId);
+  const [email, setEmail] = useState("");
+  const [commentData, setCommentData] = useState<z.infer<
+    typeof formSchema
+  > | null>(null);
+  const [otpError, setOtpError] = useState("");
 
-const FeedbackForm = () => {
+  useEffect(() => {
+    async function fetchFeedbacks() {
+      try {
+        const response = await fetch("/api/feedback", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formFolderId),
+        });
+        
+      } catch (error: any) {
+        toast({
+          title: "Failed",
+          description: "can not fetch comments from user",
+        });
+      }
+
+      fetchFeedbacks();
+    }
+  }, [processing]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       content: "",
-      email: ""
+      email: "",
+      folderId: formFolderId,
     },
   });
 
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      setProcessing(true);
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.requiresVerification) {
+          setShowOtpPopup(true);
+          setEmail(values.email);
+          setCommentData(values);
+        } else {
+          toast({
+            title: "Success",
+            description: "Comment posted successfully!",
+          });
+          form.reset();
+        }
+      } else {
+        toast({
+          title: "Failed",
+          description: data.error || "Something went wrong",
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      toast({
+        title: "Failed",
+        description: "Something went wrong. Please try again.",
+      });
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const handleOtpSubmit = async () => {
+    try {
+      setProcessing(true);
+      const response = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setShowOtpPopup(false);
+        await onSubmit(commentData!); // Resend comment after verification
+      } else {
+        setOtpError("Invalid OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setOtpError("Something went wrong. Please try again.");
+    } finally {
+      setProcessing(false);
+    }
+  };
+
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 mt-10"
-      >
-        <div className="flex items-center w-full gap-4 grow">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem
-                className="w-1/3"
-              >
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+    <>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 mt-10"
+        >
+          <div className="flex items-center w-full gap-4 grow">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="w-1/3">
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-2/3">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="example@email.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Comment</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Tell us about your experience"
+                      className="resize-none h-44"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-fit" disabled={processing}>
+              Submit
+            </Button>
+          </div>
+        </form>
+      </Form>
+
+      {/* OTP Verification Popup */}
+      <Dialog open={showOtpPopup} onOpenChange={setShowOtpPopup}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enter OTP for Email Verification</DialogTitle>
+          </DialogHeader>
+          <p>
+            A verification code has been sent to {email}. Please enter it below:
+          </p>
+          <Input
+            type="text"
+            placeholder="Enter OTP"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            className="mt-2"
           />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem
-                className="w-2/3"
-              >
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="flex flex-col gap-4">
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Comment</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Tell us a little bit about how it felt"
-                    className="resize-none h-44"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-fit">Submit</Button>
-        </div>
-      </form>
-    </Form>
+          {otpError && <p className="text-red-500 text-sm">{otpError}</p>}
+          <Button onClick={handleOtpSubmit} className="mt-4">
+            Verify & Submit Comment
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      <div></div>
+    </>
   );
 };
 

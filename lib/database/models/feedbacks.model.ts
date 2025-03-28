@@ -11,6 +11,7 @@ const FeedbackSchema = new Schema({
     },
     username: {
         type: String,
+        required: true,
         minLength: 5
     },
     content: {
@@ -18,8 +19,8 @@ const FeedbackSchema = new Schema({
         default: ""
     },
     folderId: { 
+        required: true,
         type: String,
-        unique: true
     },
 }, {
     timestamps: true

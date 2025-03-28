@@ -25,10 +25,12 @@ export default function BlogPost({
 }) {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [formFolderId, setformFolderId] = useState("");
 
   useEffect(() => {
     async function fetchImages() {
       const { folderId } = await params;
+      setformFolderId(folderId)
       setLoading(true);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/folders/${folderId}`
@@ -101,7 +103,7 @@ export default function BlogPost({
         ))}
         {images.length == 0 && <p>Error in Loading Images</p>}
       </div>
-      <FeedbackForm/>
+      <FeedbackForm folderId={`${formFolderId}`}/>
     </main>
   );
 }

@@ -3,46 +3,24 @@ import { CommandIcon, LinkedinIcon, Twitter } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Anchor from "./anchor";
-import { SheetLeftbar } from "./leftbar";
-import { page_routes } from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
-import AlgoliaSearch from "./algolia-search";
 
 export const NAVLINKS = [
-  // {
-  //   title: "Documentation",
-  //   href: `/docs${page_routes[0].href}`,
-  // },
   {
     title: "Blog",
     href: "/blog",
   },
-  // {
-  //   title: "Examples",
-  //   href: "#",
-  // },
-  // {
-  //   title: "Guides",
-  //   href: "#",
-  // },
   {
     title: "Community",
     href: "https://github.com/ratnesh003/medical-science-research-docs/discussions",
   },
 ];
 
-const algolia_props = {
-  appId: process.env.ALGOLIA_APP_ID!,
-  indexName: process.env.ALGOLIA_INDEX!,
-  apiKey: process.env.ALGOLIA_SEARCH_API_KEY!,
-};
-
 export function Navbar() {
   return (
     <nav className="w-full border-b h-16 sticky top-0 z-50 bg-background">
       <div className="sm:container mx-auto w-[95vw] h-full flex items-center sm:justify-between md:gap-2">
         <div className="flex items-center sm:gap-5 gap-2.5">
-          <SheetLeftbar />
           <div className="flex items-center gap-6">
             <div className="sm:flex hidden">
               <Logo />
@@ -54,7 +32,6 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center sm:justify-normal justify-between sm:gap-3 ml-1 sm:w-fit w-[90%]">
-          {/* <AlgoliaSearch {...algolia_props} /> */}
           <div className="flex items-center justify-between sm:gap-2">
             <div className="flex ml-4 sm:ml-0">
               <Link
