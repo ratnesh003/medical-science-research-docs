@@ -9,18 +9,33 @@ const auth = new google.auth.JWT({
 const drive = google.drive({ version: 'v3', auth });
 
 export async function listFolders(parentFolderId: string) {
-  const res = await drive.files.list({
-    q: `'${parentFolderId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
-    fields: 'files(id, name, modifiedTime)',
-  });
+  const allFolders: any[] = [];
+  let pageToken: string | undefined = undefined;
 
-  return res.data.files || [];
+  do {
+    const res: any = await drive.files.list({
+      q: `'${parentFolderId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
+      fields: 'nextPageToken, files(id, name, modifiedTime)',
+      pageSize: 100, // Increase to the max allowed
+      orderBy: 'modifiedTime desc',
+      pageToken: pageToken,
+    });
+
+    if (res.data.files) {
+      allFolders.push(...res.data.files);
+    }
+
+    pageToken = res.data.nextPageToken;
+  } while (pageToken);
+
+  return allFolders;
 }
+
 
 export async function listImages(folderId: string) {
   const res = await drive.files.list({
     q: `'${folderId}' in parents and mimeType contains 'image/' and trashed = false`,
-    fields: 'files(id, name, mimeType, webContentLink, thumbnailLink)',
+    fields: 'files(id, name, mimeType, webContentLink, thumbnailLink, createdTime)',
   });
 
   return res.data.files || [];

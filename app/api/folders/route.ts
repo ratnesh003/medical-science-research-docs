@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import { listFolders, getThumbnailImage } from '@/lib/googleDrive';
 
-export const revalidate = 60; // ISR for 60 seconds
-
 export async function GET() {
   try {
     const folders = await listFolders(process.env.GOOGLE_DRIVE_FOLDER_ID!);
