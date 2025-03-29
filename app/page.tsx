@@ -1,14 +1,12 @@
 import { buttonVariants } from "@/components/ui/button";
 import { MoveUpRightIcon } from "lucide-react";
-// import { page_routes } from "@/lib/routes-config";
-// import { MoveUpRightIcon, TerminalSquareIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="flex sm:min-h-[85.5vh] min-h-[82vh] flex-col sm:items-center justify-center text-center px-2 sm:py-8 py-12">
       <Link
-        href="https://www.linkedin.com/in/himanshu-kabra/"
+        href="https://www.linkedin.com/in/kartikkeyy/"
         target="_blank"
         className="mb-5 sm:text-lg flex items-center gap-2 underline underline-offset-4 sm:-mt-12"
       >

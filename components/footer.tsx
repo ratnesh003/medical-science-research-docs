@@ -16,13 +16,6 @@ export function Footer() {
             >
               Dr. XYZ
             </Link>
-            . The source code is available on{" "}
-            <Link
-              className="px-1 underline underline-offset-2"
-              href="https://github.com/ratnesh003/medical-science-research-docs"
-            >
-              GitHub
-            </Link>
             .
           </p>
         </div>

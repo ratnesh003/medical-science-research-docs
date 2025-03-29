@@ -21,7 +21,17 @@ export default function HomePage() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/folders`
       );
       const temp = await res.json();
-      setFolders(temp);
+      const sortedFiles = temp.sort((a: any, b: any) => {
+        const numA = parseInt(a.name.match(/^\d+/)?.[0] || "0", 10);
+        const numB = parseInt(b.name.match(/^\d+/)?.[0] || "0", 10);
+
+        if (numA !== numB) {
+          return numA - numB;
+        }
+
+        return a.name.localeCompare(b.name);
+      });
+      setFolders(sortedFiles);
       setLoading(false);
     }
 

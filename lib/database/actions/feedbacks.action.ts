@@ -4,7 +4,7 @@ import Feedback from "@/lib/database/models/feedbacks.model";
 export async function getFeedbacksByFolderId(folderId: String) {
     try {
         await connectToDatabase()
-        const feedbacks = await Feedback.find({ folderId })
+        const feedbacks = await Feedback.find({ folderId }).sort({ createdAt: -1 }).exec();
         return JSON.parse(JSON.stringify(feedbacks))
     } catch (error: any) {
         console.error(error);
@@ -13,16 +13,16 @@ export async function getFeedbacksByFolderId(folderId: String) {
 }
 
 export async function addFeedback(
-    { 
-        email, 
-        username, 
-        content, 
-        folderId 
-    }: { 
-        email: String, 
-        username: String, 
-        content: String, 
-        folderId:String 
+    {
+        email,
+        username,
+        content,
+        folderId
+    }: {
+        email: String,
+        username: String,
+        content: String,
+        folderId: String
     }
 ) {
     try {

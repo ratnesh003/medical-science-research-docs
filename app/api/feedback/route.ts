@@ -25,13 +25,13 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
-  try {
-    const { folderId } = await req.json()
-    const feedbacks = await getFeedbacksByFolderId(folderId)
-    return NextResponse.json({data: feedbacks}, { status: 200 })
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Failed to fetch feedback" }, { status: 499 });
-  }
-}
+// export async function GET(req: Request) {
+//   try {
+//     const { folderId } = await req.json()
+//     const feedbacks = await getFeedbacksByFolderId(folderId)
+//     return NextResponse.json({data: feedbacks}, { status: 200 })
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json({ error: "Failed to fetch feedback" }, { status: 499 });
+//   }
+// }

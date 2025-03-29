@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import React, { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardDescription, CardHeader } from "./ui/card";
 
 const formSchema = z.object({
   username: z.string().min(5, {
@@ -43,6 +44,8 @@ const formSchema = z.object({
 const FeedbackForm = ({ folderId }: { folderId: string }) => {
   const { toast } = useToast();
   const [showOtpPopup, setShowOtpPopup] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [loadingFeedbacks, setLoadingFeedbacks] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [otp, setOtp] = useState("");
   const [formFolderId, setformFolderId] = useState(folderId);
@@ -55,23 +58,28 @@ const FeedbackForm = ({ folderId }: { folderId: string }) => {
   useEffect(() => {
     async function fetchFeedbacks() {
       try {
-        const response = await fetch("/api/feedback", {
+        setLoadingFeedbacks(true);
+        const response = await fetch(`/api/feedback/${formFolderId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formFolderId),
         });
-        
+        const temp = await response.json();
+        setFeedbacks(temp.data);
+        console.log(temp);
       } catch (error: any) {
         toast({
           title: "Failed",
           description: "can not fetch comments from user",
         });
+        console.error(error);
+      } finally {
+        setLoadingFeedbacks(false);
       }
-
-      fetchFeedbacks();
     }
+
+    fetchFeedbacks();
   }, [processing]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -236,7 +244,16 @@ const FeedbackForm = ({ folderId }: { folderId: string }) => {
         </DialogContent>
       </Dialog>
 
-      <div></div>
+      <div className="flex gap-4 flex-col mt-4">
+        {feedbacks.map((comment: any, idx) => (
+          <Card key={idx}>
+            <CardContent>
+              <CardHeader className="pl-0 pb-2">{comment.username}</CardHeader>
+              <CardDescription>{comment.content}</CardDescription>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </>
   );
 };
