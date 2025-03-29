@@ -253,6 +253,15 @@ const FeedbackForm = ({ folderId }: { folderId: string }) => {
             </CardContent>
           </Card>
         ))}
+
+        {!feedbacks.length && (
+          <Card>
+            <CardContent>
+              <CardHeader className="pl-0 pb-2">Add comments here</CardHeader>
+              <CardDescription>No Comments on this Blog</CardDescription>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </>
   );
