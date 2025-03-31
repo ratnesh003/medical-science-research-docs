@@ -4,16 +4,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex mt-6 min-h-screen h-full flex-col sm:items-center justify-center text-center px-2 sm:py-8 py-12">
-      <Link
-        href="https://www.linkedin.com/in/sanjaytiwari/"
-        target="_blank"
-        className="mb-5 sm:text-lg flex items-center gap-2 underline underline-offset-4 sm:-mt-12"
-      >
-        Follow along on LinkedIn{" "}
-        <MoveUpRightIcon className="w-4 h-4 font-extrabold" />
-      </Link>
-      <div className="flex flex-wrap flex-col md:flex-row-reverse justify-between w-full">
+    <div className="flex min-h-screen h-full flex-col sm:items-center justify-center text-center px-2 sm:py-8 py-12">
+      <div className="flex flex-wrap flex-col md:flex-row-reverse items-center justify-between w-full">
         <div className="md:w-1/3 w-full mt-8 h-96 rounded-lg overflow-hidden">
           <img
             src="/13193_2017_675_Figa_HTML.jpg"
