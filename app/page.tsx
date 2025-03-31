@@ -32,11 +32,7 @@ export default function Home() {
             Hospital in Amsterdam, the Netherlands, between January 1979 and
             September 1999.
           </p>
-        </div>
-      </div>
-
-      <div className="sm:flex sm:flex-row grid grid-cols-2 items-center sm;gap-5 gap-3 mb-8">
-        <Link
+          <Link
           href="/blog"
           className={buttonVariants({
             className: "px-6",
@@ -45,6 +41,10 @@ export default function Home() {
         >
           Read Blog
         </Link>
+        </div>
+      </div>
+
+      <div className="sm:flex sm:flex-row grid grid-cols-2 items-center sm;gap-5 gap-3 mb-8">
       </div>
       <p className="mb-8 sm:text-lg max-w-[800px] text-muted-foreground text-left sm:text-center">
         The slides are being hosted on this site to give medical practitioners
