@@ -14,7 +14,7 @@ export function Footer() {
               className="px-1 underline underline-offset-2"
               href="https://github.com/ratnesh003/"
             >
-              Dr. XYZ
+              Dr. Ram Mohan Tiwari
             </Link>
             .
           </p>

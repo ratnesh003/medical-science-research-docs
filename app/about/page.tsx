@@ -4,14 +4,14 @@ const CommunityPage = () => {
   return (
     <>
       <div className="flex flex-wrap flex-col md:flex-row-reverse justify-between">
-      <div className="md:w-1/3 w-full mt-8 h-96 rounded-lg overflow-hidden">
+        <div className="md:w-1/3 w-full mt-8 h-96 rounded-lg overflow-hidden">
           <img
             src="/13193_2017_675_Figa_HTML.jpg"
             alt="Profile of Dr. Ram Mohan Tiwari"
             className="object-cover h-full"
           />
         </div>
-        <div className="min-h-screen w-3/5 content-center ">
+        <div className="min-h-screen sm:w-3/5 w-full content-center ">
           <h1 className="text-[2.4rem] leading-10 sm:leading-[4.5rem] font-bold sm:text-5xl mt-2">
             About Dr Ram Mohan Tiwari
           </h1>

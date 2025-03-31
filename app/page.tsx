@@ -21,12 +21,12 @@ export default function Home() {
             className="object-cover h-full"
           />
         </div>
-        <div className="w-3/5 h-[80vh] content-center">
-          <h1 className="text-[2.4rem] leading-5 sm:leading-[3rem] font-bold mb-4 sm:text-5xl text-left sm:text-center">
+        <div className="sm:w-3/5 w-full sm:h-[80vh] h-full content-center">
+          <h1 className="text-[2.4rem] leading-10 sm:leading-[3rem] font-bold mb-4 sm:text-5xl text-left sm:text-center">
             The slides (transparencies) are from the archives of Dr Ram Mohan
             Tiwari (M.B.B.S, MS, FRCS, FACS, PhD).{" "}
           </h1>
-          <p className="mb-8 sm:text-lg max-w-[800px] text-muted-foreground text-left sm:text-center">
+          <p className="mb-8 sm:text-lg sm:max-w-[800px] w-full text-muted-foreground text-left sm:text-center">
             These slides were taken during head and neck oncology procedures
             performed by Dr Tiwari during his tenure at the Free University
             Hospital in Amsterdam, the Netherlands, between January 1979 and
