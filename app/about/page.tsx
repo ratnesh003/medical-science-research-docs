@@ -28,8 +28,8 @@ const CommunityPage = () => {
             After borrowing money from one of his elder sisters he sailed for
             England in 1961 and found a job as an ENT surgeon in Lancaster. He
             married Catharina Verhoeff in 1964, a Dutch nurse who was working at
-            the same hospital were Ram Tiwari worked in Lancaster and was
-            planning on migrating to the United States.
+            the same hospital where he was working. She had been planning for
+            migrating to the United States.
           </p>
           <p className="sm:text-lg text-muted-foreground mt-4">
             Together Ram Mohan and Ina lived in Birmingham, West Bromwich,

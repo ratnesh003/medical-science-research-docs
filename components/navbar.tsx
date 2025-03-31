@@ -34,24 +34,6 @@ export function Navbar() {
         <div className="flex items-center sm:justify-normal justify-between sm:gap-3 ml-1 sm:w-fit w-[90%]">
           <div className="flex items-center justify-between sm:gap-2">
             <div className="flex ml-4 sm:ml-0">
-              <Link
-                href="https://www.linkedin.com/in/sanjaytiwari/"
-                className={buttonVariants({
-                  variant: "ghost",
-                  size: "icon",
-                })}
-              >
-                <LinkedinIcon className="h-[1.1rem] w-[1.1rem]" />
-              </Link>
-              <Link
-                href="#"
-                className={buttonVariants({
-                  variant: "ghost",
-                  size: "icon",
-                })}
-              >
-                <Twitter className="h-[1.1rem] w-[1.1rem]" />
-              </Link>
               <ModeToggle />
             </div>
           </div>

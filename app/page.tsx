@@ -59,7 +59,7 @@ export default function Home() {
         The slides are being hosted on this site to give medical practitioners
         and researchers the opportunity to use them as a resource, to be able to
         visualise some of the very innovative surgical procedures that were
-        carried out by Dr Tiwari and his colleagues during those years. s
+        carried out by Dr Tiwari and his colleagues during those years.
       </p>
       <p className="mb-8 sm:text-lg max-w-[800px] text-muted-foreground text-left sm:text-center">
         Additionally, the intent is to invite comment, to allow for a better

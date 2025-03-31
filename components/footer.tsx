@@ -12,7 +12,7 @@ export function Footer() {
             Build for{" "}
             <Link
               className="px-1 underline underline-offset-2"
-              href="https://github.com/ratnesh003/"
+              href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9478053/"
             >
               Dr. Ram Mohan Tiwari
             </Link>
@@ -21,30 +21,8 @@ export function Footer() {
         </div>
 
         <div className="gap-4 items-center hidden md:flex">
-          <FooterButtons />
         </div>
       </div>
     </footer>
-  );
-}
-
-export function FooterButtons() {
-  return (
-    <>
-      <Link
-        href="https://vercel.com/templates/next.js/documentation-template"
-        className={buttonVariants({ variant: "outline", size: "sm" })}
-      >
-        <Copyright className="h-[0.8rem] w-4 mr-2 text-primary" />
-        Copy Right Since Mar 2025
-      </Link>
-      <Link
-        href="https://github.com/sponsors/nisabmohd"
-        className={buttonVariants({ variant: "outline", size: "sm" })}
-      >
-        <HeartIcon className="h-4 w-4 mr-2 text-red-600 fill-current" />
-        Hospital Name
-      </Link>
-    </>
   );
 }
