@@ -35,11 +35,20 @@ export default function Home() {
           <Link
           href="/blog"
           className={buttonVariants({
-            className: "px-6",
+            className: "px-6 mr-4",
             size: "lg",
           })}
         >
           Read Blog
+        </Link>
+          <Link
+          href="/about"
+          className={buttonVariants({
+            className: "px-6 bg-secondary text-secondary-foreground hover:bg-secondary/80",
+            size: "lg",
+          })}
+        >
+          More Info
         </Link>
         </div>
       </div>
